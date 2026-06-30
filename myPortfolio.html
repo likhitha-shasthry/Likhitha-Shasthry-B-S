@@ -237,6 +237,27 @@
   }
   .summary .hl{color:var(--accent);font-weight:600;}
 
+  /* Currently Working On */
+  .now-list{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+  }
+  .now-item{
+    background:var(--bg-card);
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    transition:background .15s, padding-left .15s;
+  }
+  .now-item:hover{background:#fbf6f0;padding-left:24px;}
+  .now-icon{font-size:18px;flex-shrink:0;}
+  .now-text{font-size:14.5px;color:var(--ink);}
+  .now-text strong{color:#9c4a1f;font-weight:600;}
+
   /* Specs grid (skills) */
   .specs{
     display:grid;
@@ -452,6 +473,28 @@
       <p class="summary reveal">
         I build things that get <span class="hl">used</span>, not just demoed — a recruitment platform now running live at my college, an irrigation model that cuts real water waste, a tool that helps beginners see code think. Currently deep in data structures, operating systems, and the AI &amp; ML coursework that frames how I approach problems.
       </p>
+    </section>
+
+    <section id="now">
+      <div class="section-head"><span class="num">01.5</span><h2>Currently Working On</h2><span class="rule"></span></div>
+      <div class="now-list reveal">
+        <div class="now-item">
+          <span class="now-icon">🚧</span>
+          <span class="now-text">Building a <strong>Hostel Gatepass Management System</strong> — a web app to digitize and streamline student gate-pass requests and approvals</span>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">📚</span>
+          <span class="now-text">Strengthening fundamentals in <strong>Operating Systems</strong> and <strong>Data Structures &amp; Algorithms</strong></span>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">💡</span>
+          <span class="now-text">Practicing problem-solving consistently on <strong>HackerRank</strong></span>
+        </div>
+        <div class="now-item">
+          <span class="now-icon">🌱</span>
+          <span class="now-text">Looking for <strong>Software Engineering Internship</strong> opportunities</span>
+        </div>
+      </div>
     </section>
 
     <section id="skills">
