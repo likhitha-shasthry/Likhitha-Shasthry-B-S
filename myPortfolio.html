@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likhitha Shasthry B S — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #eef3f1;
+    --bg-card: #ffffff;
+    --ink: #142329;
+    --line: #2e6f77;
+    --line-soft: rgba(46,111,119,0.28);
+    --accent: #d9622b;
+    --accent-soft: #f4d9c8;
+    --sage: #6f8567;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --display: 'Fraunces', serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:inherit;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+
+  /* ---- Progress rail ---- */
+  .progress-rail{
+    position:fixed;
+    top:0;left:0;
+    height:3px;
+    width:0%;
+    background:var(--accent);
+    z-index:100;
+    transition:width .1s linear;
+  }
+
+  /* ---- Sticky nav ---- */
+  .navbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(238,243,241,0.82);
+    border-bottom:1px solid var(--line-soft);
+    opacity:0;
+    transform:translateY(-100%);
+    transition:opacity .3s ease, transform .3s ease;
+    pointer-events:none;
+  }
+  .navbar.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .navbar-inner{
+    max-width:980px;margin:0 auto;padding:0 28px;
+    display:flex;justify-content:space-between;align-items:center;
+    height:48px;
+  }
+  .navbar-inner .nb-name{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.04em;}
+  .navbar-links{display:flex;gap:22px;}
+  .navbar-links a{font-family:var(--mono);font-size:11.5px;text-decoration:none;color:var(--line);text-transform:uppercase;letter-spacing:.06em;transition:color .15s;position:relative;}
+  .navbar-links a::after{
+    content:'';
+    position:absolute;left:0;bottom:-15px;
+    width:100%;height:2px;
+    background:var(--accent);
+    transform:scaleX(0);
+    transition:transform .2s ease;
+  }
+  .navbar-links a:hover{color:var(--accent);}
+  .navbar-links a.active{color:var(--accent);}
+  .navbar-links a.active::after{transform:scaleX(1);}
+  @media (max-width:680px){ .navbar-links{display:none;} }
+
+  /* ---- Tech chips ---- */
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .chip{
+    font-family:var(--mono);
+    font-size:11px;
+    padding:3px 9px;
+    border:1px solid var(--line-soft);
+    border-radius:20px;
+    color:var(--line);
+    background:rgba(255,255,255,0.6);
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .project:hover .chip{border-color:var(--line);}
+  .chip:hover{background:var(--accent-soft);color:#9c4a1f;border-color:var(--accent);}
+
+  /* ---- Projects grid (wide screens) ---- */
+  .projects-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  @media (min-width:860px){
+    .projects-grid{grid-template-columns:1fr 1fr;}
+    .projects-grid .project.featured{grid-column:1 / -1;}
+  }
+  .project{margin-bottom:0;display:flex;flex-direction:column;}
+  .project-body{flex:1;display:flex;flex-direction:column;}
+  .project-links{margin-top:auto;}
+
+  /* ---- Title block (signature element) ---- */
+  .titleblock{
+    border:1.5px solid var(--ink);
+    background:var(--bg-card);
+    margin:32px auto 0;
+    max-width:980px;
+    position:relative;
+    box-shadow:6px 6px 0 var(--line-soft);
+  }
+  .tb-top{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .tb-name{
+    padding:32px 28px 18px;
+    border-right:1.5px solid var(--ink);
+    position:relative;
+  }
+  .tb-name .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.12em;
+    color:var(--line);
+    text-transform:uppercase;
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .tb-name .eyebrow::before{
+    content:'';
+    width:18px;height:1px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .tb-name h1{
+    font-family:var(--display);
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(34px,5vw,52px);
+    margin:0 0 6px;
+    line-height:1.05;
+  }
+  .tb-name p{
+    margin:0;
+    font-size:15px;
+    color:#3b4a4f;
+  }
+  .tb-fields{
+    display:grid;
+    grid-template-rows:repeat(4,1fr);
+  }
+  .tb-field{
+    border-bottom:1px solid var(--line-soft);
+    padding:10px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:var(--mono);
+    font-size:12px;
+    transition:background .15s;
+  }
+  .tb-field:hover{background:rgba(217,98,43,0.06);}
+  .tb-field:last-child{border-bottom:none;}
+  .tb-field .k{color:var(--line);text-transform:uppercase;letter-spacing:.08em;}
+  .tb-field .v{color:var(--ink);font-weight:500;text-align:right;}
+  .tb-bottom{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0;
+    border-top:1.5px solid var(--ink);
+  }
+  .tb-bottom a{
+    font-family:var(--mono);
+    font-size:12.5px;
+    padding:12px 18px;
+    text-decoration:none;
+    border-right:1px solid var(--line-soft);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    transition:background .15s, color .15s;
+    position:relative;
+  }
+  .tb-bottom a:last-child{border-right:none;}
+  .tb-bottom a:hover{background:var(--accent-soft);color:#9c4a1f;}
+  .tb-bottom a .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);transition:transform .15s;}
+  .tb-bottom a:hover .dot{transform:scale(1.4);}
+
+  section{padding:64px 0 0;scroll-margin-top:64px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .section-head .num{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    padding:2px 8px;
+    border-radius:2px;
+  }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:26px;
+    margin:0;
+  }
+  .section-head .rule{flex:1;height:1px;background:var(--line-soft);}
+
+  /* Summary */
+  .summary{
+    font-family:var(--display);
+    font-size:clamp(19px,2.4vw,23px);
+    font-weight:400;
+    line-height:1.5;
+    color:#1c2f36;
+    max-width:760px;
+  }
+  .summary .hl{color:var(--accent);font-weight:600;}
+
+  /* Specs grid (skills) */
+  .specs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--ink);
+    border:1px solid var(--ink);
+  }
+  @media (max-width:760px){
+    .specs{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:480px){
+    .specs{grid-template-columns:1fr;}
+  }
+  .spec{
+    background:var(--bg-card);
+    padding:18px 20px;
+    transition:background .18s, transform .18s;
+  }
+  .spec:hover{background:#fbf6f0;transform:translateY(-2px);}
+  .spec .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--line);
+    margin-bottom:8px;
+  }
+  .spec .items{
+    font-size:14px;
+    color:var(--ink);
+  }
+
+  /* Projects as schematic cards */
+  .project{
+    border:1px solid var(--ink);
+    background:var(--bg-card);
+    margin-bottom:24px;
+    position:relative;
+    overflow:hidden;
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .project:hover{
+    box-shadow:5px 5px 0 var(--line-soft);
+    transform:translate(-2px,-2px);
+  }
+  .project-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    padding:22px 24px 14px;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  .project-head h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:21px;
+    margin:0 0 4px;
+  }
+  .project-head .stack{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--line);
+  }
+  .status{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:4px 10px;
+    border-radius:2px;
+    white-space:nowrap;
+    height:fit-content;
+  }
+  .status.live{background:#dff0e4;color:#2c6b3f;border:1px solid #2c6b3f;}
+  .status.team{background:#eaf0f7;color:#2e5a77;border:1px solid #2e5a77;}
+  .status.solo{background:var(--accent-soft);color:#9c4a1f;border:1px solid var(--accent);}
+
+  .project-body{padding:18px 24px 24px;}
+  .project-body ul{margin:0;padding-left:18px;}
+  .project-body li{margin-bottom:8px;font-size:14.5px;}
+  .project-links{margin-top:14px;display:flex;gap:14px;}
+  .project-links a{
+    font-family:var(--mono);
+    font-size:12px;
+    text-decoration:none;
+    color:var(--line);
+    border-bottom:1px solid var(--line);
+    transition:color .15s, border-color .15s;
+  }
+  .project-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+  /* Achievements / certs as ledger rows */
+  .ledger{border-top:1px solid var(--ink);}
+  .ledger-row{
+    display:grid;
+    grid-template-columns: 90px 1fr;
+    border-bottom:1px solid var(--line-soft);
+    padding:14px 4px;
+    gap:18px;
+    transition:background .15s, padding-left .15s;
+  }
+  .ledger-row:hover{background:rgba(217,98,43,0.05);padding-left:10px;}
+  .ledger-row .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    padding-top:2px;
+  }
+  .ledger-row .desc{font-size:14.5px;}
+
+  footer{
+    margin-top:80px;
+    padding:30px 0 50px;
+    border-top:1.5px solid var(--ink);
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--line);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* back to top */
+  .to-top{
+    position:fixed;
+    bottom:24px;right:24px;
+    width:42px;height:42px;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--bg);
+    border:none;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:16px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .25s, transform .25s, background .15s;
+    z-index:60;
+    pointer-events:none;
+  }
+  .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .to-top:hover{background:var(--accent);}
+
+  @media (max-width:680px){
+    .tb-top{grid-template-columns:1fr;}
+    .tb-name{border-right:none;border-bottom:1.5px solid var(--ink);}
+    .ledger-row{grid-template-columns:70px 1fr;}
+    .titleblock{box-shadow:4px 4px 0 var(--line-soft);}
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  /* reveal animation */
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+  <div class="progress-rail" id="progressRail"></div>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <span class="nb-name">LIKHITHA SHASTHRY B S</span>
+      <div class="navbar-links">
+        <a href="#summary">Summary</a>
+        <a href="#skills">Specs</a>
+        <a href="#projects">Builds</a>
+        <a href="#record">Record</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="titleblock reveal">
+    <div class="tb-top">
+      <div class="tb-name">
+        <p class="eyebrow">Engineering Notebook — Sheet 01</p>
+        <h1>Likhitha Shasthry B S</h1>
+        <p>Computer Science (AI &amp; ML) Undergraduate · GSSS Institute of Engineering &amp; Technology</p>
+      </div>
+      <div class="tb-fields">
+        <div class="tb-field"><span class="k">Status</span><span class="v">4th Semester · 2024–2028</span></div>
+        <div class="tb-field"><span class="k">CGPA</span><span class="v">8.8 / 10</span></div>
+        <div class="tb-field"><span class="k">Stack</span><span class="v">Java · C++ · Python · JS</span></div>
+        <div class="tb-field"><span class="k">Builds</span><span class="v">1 Deployed · 4 Shipped</span></div>
+      </div>
+    </div>
+    <div class="tb-bottom">
+      <a href="mailto:likhithashasthry@gmail.com"><span class="dot"></span>likhithashasthry@gmail.com</a>
+      <a href="tel:+919448537792"><span class="dot"></span>+91 9448537792</a>
+      <a href="https://github.com/likhitha-shasthry" target="_blank" rel="noopener"><span class="dot"></span>github.com/likhitha-shasthry</a>
+      <a href="https://linkedin.com/in/likhitha-shasthry-b-s" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
+      <a href="https://hackerrank.com/likhithashasthry" target="_blank" rel="noopener"><span class="dot"></span>HackerRank</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section id="summary">
+      <div class="section-head"><span class="num">01</span><h2>Summary</h2><span class="rule"></span></div>
+      <p class="summary reveal">
+        I build things that get <span class="hl">used</span>, not just demoed — a recruitment platform now running live at my college, an irrigation model that cuts real water waste, a tool that helps beginners see code think. Currently deep in data structures, operating systems, and the AI &amp; ML coursework that frames how I approach problems.
+      </p>
+    </section>
+
+    <section id="skills">
+      <div class="section-head"><span class="num">02</span><h2>Specs</h2><span class="rule"></span></div>
+      <div class="specs reveal">
+        <div class="spec">
+          <div class="label">Languages</div>
+          <div class="items">Java, C, C++, Python</div>
+        </div>
+        <div class="spec">
+          <div class="label">Core CS</div>
+          <div class="items">Data Structures &amp; Algorithms, Operating Systems</div>
+        </div>
+        <div class="spec">
+          <div class="label">Web</div>
+          <div class="items">HTML, CSS, JavaScript, Node.js, React.js, PHP</div>
+        </div>
+        <div class="spec">
+          <div class="label">Data</div>
+          <div class="items">MySQL, MongoDB, SQL</div>
+        </div>
+        <div class="spec">
+          <div class="label">Systems</div>
+          <div class="items">MQTT, IoT Communication, REST APIs</div>
+        </div>
+        <div class="spec">
+          <div class="label">Tools</div>
+          <div class="items">Git, Figma, AWS Cloud Foundations</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head"><span class="num">03</span><h2>Builds</h2><span class="rule"></span></div>
+
+      <div class="projects-grid">
+
+      <div class="project featured reveal">
+        <div class="project-head">
+          <div>
+            <h3>Faculty Recruitment Management System</h3>
+            <div class="chips">
+              <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+            </div>
+          </div>
+          <span class="status live">Deployed · live</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Full-stack platform handling end-to-end faculty application and multi-stage selection workflows.</li>
+            <li>Normalized MySQL schema with CRUD operations supporting concurrent use by applicants and reviewers.</li>
+            <li>In active production use by the college — not a class demo, a system people depend on.</li>
+            <li>1st Place, GDG Hackathon.</li>
+          </ul>
+          
+<div class="project-links">
+            <a href="https://github.com/likhitha-shasthry/demo2" target="_blank" rel="noopener">View source →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project reveal">
+        <div class="project-head">
+          <div>
+            <h3>Intelligent Irrigation Scheduler</h3>
+            <div class="chips">
+              <span class="chip">JavaScript</span><span class="chip">REST APIs</span><span class="chip">UI/UX</span>
+            </div>
+          </div>
+          <span class="status team">Team of 4</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Data-driven irrigation system pulling real-time weather data via REST APIs to automate watering decisions.</li>
+            <li>Evapotranspiration (ET)-based model cut simulated water usage by 20–30%.</li>
+            <li>Owned UI/UX and the data flow between the API layer and the decision engine.</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/likhitha-shasthry/tech-twins" target="_blank" rel="noopener">View source →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project reveal">
+        <div class="project-head">
+          <div>
+            <h3>CodeFlow AI — Python Execution Visualizer</h3>
+            <div class="chips">
+              <span class="chip">JavaScript</span><span class="chip">Python</span>
+            </div>
+          </div>
+          <span class="status solo">Solo build</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Interactive tool that traces Python execution line-by-line for beginners learning to code.</li>
+            <li>Tracks variable state changes, loop iterations, function call flow, and runtime errors in real time.</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/likhitha-shasthry/CodeFlow-AI" target="_blank" rel="noopener">View source →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project reveal">
+        <div class="project-head">
+          <div>
+            <h3>Excel Sheet Sorting Tool</h3>
+            <div class="chips">
+              <span class="chip">Python</span><span class="chip">Excel</span><span class="chip">File Handling</span>
+            </div>
+          </div>
+          <span class="status team">Team project</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>CLI application to sort and organize Excel sheet data by selected columns and sort order.</li>
+            <li>Handled file I/O directly, reading and rewriting spreadsheet data without manual intervention.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="project reveal">
+        <div class="project-head">
+          <div>
+            <h3>Desktop Organizer (CLI)</h3>
+            <div class="chips">
+              <span class="chip">Java</span><span class="chip">DSA</span><span class="chip">Java NIO</span><span class="chip">OS File Handling</span>
+            </div>
+          </div>
+          <span class="status solo">Solo build</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Java desktop application that automatically organizes files and folders by creation month.</li>
+            <li>Used Java NIO and OS-level file handling to automate sorting, improving manual workflow efficiency.</li>
+            <li>Applied stack and recursion to manage nested directory traversal during organization.</li>
+          </ul>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <section id="record">
+      <div class="section-head"><span class="num">04</span><h2>Record</h2><span class="rule"></span></div>
+      <div class="ledger reveal">
+        <div class="ledger-row"><span class="tag">Award</span><span class="desc">1st Place — GDG Hackathon, Faculty Recruitment Management System</span></div>
+        <div class="ledger-row"><span class="tag">Award</span><span class="desc">2nd Place — Data Structures &amp; Algorithms Tournament</span></div>
+        <div class="ledger-row"><span class="tag">Award</span><span class="desc">Winner — Group Discussion Competition, "Apti College" (judged by placed seniors)</span></div>
+        <div class="ledger-row"><span class="tag">Rank</span><span class="desc">HackerRank: 5★ in C, 3★ in Problem Solving</span></div>
+        <div class="ledger-row"><span class="tag">Selected</span><span class="desc">Samsung Innovation Campus — IoT Track, Selected Participant</span></div>
+        <div class="ledger-row"><span class="tag">Cert</span><span class="desc">Programming in C — NPTEL (SWAYAM)</span></div>
+        <div class="ledger-row"><span class="tag">Cert</span><span class="desc">AWS Academy Graduate — Cloud Foundations</span></div>
+        <div class="ledger-row"><span class="tag">Sim</span><span class="desc">Deloitte Cybersecurity Job Simulation (Forage) — risk assessment &amp; threat identification, Aug 2025</span></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Sheet 01 of 01 — last revised 2026</span>
+      <span>Built with intent, not a template</span>
+    </footer>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  els.forEach(el=>io.observe(el));
+
+  const navbar = document.getElementById('navbar');
+  const progressRail = document.getElementById('progressRail');
+  const toTop = document.getElementById('toTop');
+  const titleblock = document.querySelector('.titleblock');
+
+  function onScroll(){
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+    progressRail.style.width = pct + '%';
+
+    const showThreshold = titleblock.offsetTop + titleblock.offsetHeight;
+    navbar.classList.toggle('show', scrollY > showThreshold);
+    toTop.classList.toggle('show', scrollY > 400);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  toTop.addEventListener('click', ()=>{
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Scroll-spy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.navbar-links a');
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector(`.navbar-links a[href="#${id}"]`);
+      if(!link) return;
+      if(entry.isIntersecting){
+        navLinks.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=>spy.observe(s));
+</script>
+</body>
+</html>
