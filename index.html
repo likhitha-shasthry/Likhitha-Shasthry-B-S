@@ -3,708 +3,493 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Likhitha Shasthry B S — Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Likhitha Shasthry — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #eef3f1;
-    --bg-card: #ffffff;
-    --ink: #142329;
-    --line: #2e6f77;
-    --line-soft: rgba(46,111,119,0.28);
-    --accent: #d9622b;
-    --accent-soft: #f4d9c8;
-    --sage: #6f8567;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'IBM Plex Sans', sans-serif;
-    --display: 'Fraunces', serif;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    background-image:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size: 28px 28px;
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.5;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
-  }
-  a{color:inherit;}
-  .wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+:root{
+  --bg:#1e1e2e;--sidebar:#181825;--panel:#1e1e2e;
+  --tab-bar:#181825;--tab-active:#1e1e2e;--tab-inactive:#252535;
+  --border:#313244;--text:#cdd6f4;--text-dim:#6c7086;--text-bright:#fff;
+  --accent:#cba6f7;--accent2:#89b4fa;--green:#a6e3a1;--yellow:#f9e2af;
+  --red:#f38ba8;--orange:#fab387;--pink:#f5c2e7;--teal:#94e2d5;
+  --mono:'Fira Code',monospace;--sans:'Inter',sans-serif;--display:'Fraunces',serif;
+}
+.ide{display:grid;grid-template-rows:32px 1fr 24px;grid-template-columns:230px 1fr;height:100vh;}
 
-  /* ---- Progress rail ---- */
-  .progress-rail{
-    position:fixed;
-    top:0;left:0;
-    height:3px;
-    width:0%;
-    background:var(--accent);
-    z-index:100;
-    transition:width .1s linear;
-  }
+/* TITLE BAR */
+.titlebar{grid-column:1/-1;background:#11111b;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--text-dim);letter-spacing:.04em;position:relative;border-bottom:1px solid var(--border);}
+.titlebar .traffic{position:absolute;left:12px;display:flex;gap:6px;}
+.traffic span{width:12px;height:12px;border-radius:50%;display:block;}
+.t-red{background:#ff5f57;}.t-yellow{background:#febc2e;}.t-green{background:#28c840;}
 
-  /* ---- Sticky nav ---- */
-  .navbar{
-    position:sticky;
-    top:0;
-    z-index:50;
-    backdrop-filter:blur(10px);
-    background:rgba(238,243,241,0.82);
-    border-bottom:1px solid var(--line-soft);
-    opacity:0;
-    transform:translateY(-100%);
-    transition:opacity .3s ease, transform .3s ease;
-    pointer-events:none;
-  }
-  .navbar.show{opacity:1;transform:translateY(0);pointer-events:auto;}
-  .navbar-inner{
-    max-width:980px;margin:0 auto;padding:0 28px;
-    display:flex;justify-content:space-between;align-items:center;
-    height:48px;
-  }
-  .navbar-inner .nb-name{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.04em;}
-  .navbar-links{display:flex;gap:22px;}
-  .navbar-links a{font-family:var(--mono);font-size:11.5px;text-decoration:none;color:var(--line);text-transform:uppercase;letter-spacing:.06em;transition:color .15s;position:relative;}
-  .navbar-links a::after{
-    content:'';
-    position:absolute;left:0;bottom:-15px;
-    width:100%;height:2px;
-    background:var(--accent);
-    transform:scaleX(0);
-    transition:transform .2s ease;
-  }
-  .navbar-links a:hover{color:var(--accent);}
-  .navbar-links a.active{color:var(--accent);}
-  .navbar-links a.active::after{transform:scaleX(1);}
-  @media (max-width:680px){ .navbar-links{display:none;} }
+/* SIDEBAR */
+.sidebar{background:var(--sidebar);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+.sidebar-header{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);padding:10px 14px 4px;display:flex;align-items:center;gap:6px;}
+.sidebar-header::before{content:'›';font-size:12px;}
+.file-item{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 22px;font-family:var(--mono);font-size:12.5px;color:var(--text-dim);cursor:pointer;border-left:2px solid transparent;transition:background .1s,color .1s,border-color .1s;user-select:none;}
+.file-item:hover{background:rgba(255,255,255,0.05);color:var(--text);}
+.file-item.active{background:rgba(203,166,247,0.1);color:var(--accent);border-left-color:var(--accent);}
+.file-icon{font-size:13px;flex-shrink:0;}
+.file-badge{margin-left:auto;font-size:9px;padding:1px 5px;border-radius:8px;background:var(--green);color:#11111b;font-weight:700;}
+.sidebar-divider{height:1px;background:var(--border);margin:6px 0;}
+.git-block{padding:8px 14px;font-family:var(--mono);font-size:11px;color:var(--text-dim);}
+.git-block .branch{color:var(--accent2);display:flex;align-items:center;gap:5px;margin-bottom:4px;}
 
-  /* ---- Tech chips ---- */
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-  .chip{
-    font-family:var(--mono);
-    font-size:11px;
-    padding:3px 9px;
-    border:1px solid var(--line-soft);
-    border-radius:20px;
-    color:var(--line);
-    background:rgba(255,255,255,0.6);
-    transition:border-color .15s, color .15s, background .15s;
-  }
-  .project:hover .chip{border-color:var(--line);}
-  .chip:hover{background:var(--accent-soft);color:#9c4a1f;border-color:var(--accent);}
+/* MAIN AREA */
+.main-area{display:flex;flex-direction:column;background:var(--panel);overflow:hidden;}
 
-  /* ---- Projects grid (wide screens) ---- */
-  .projects-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:24px;
-  }
-  @media (min-width:860px){
-    .projects-grid{grid-template-columns:1fr 1fr;}
-    .projects-grid .project.featured{grid-column:1 / -1;}
-  }
-  .project{margin-bottom:0;display:flex;flex-direction:column;}
-  .project-body{flex:1;display:flex;flex-direction:column;}
-  .project-links{margin-top:auto;}
+/* TABS */
+.tabs{display:flex;align-items:flex-end;background:var(--tab-bar);border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;}
+.tabs::-webkit-scrollbar{height:0;}
+.tab{display:flex;align-items:center;gap:7px;padding:0 16px;height:35px;font-family:var(--mono);font-size:12px;color:var(--text-dim);cursor:pointer;border-right:1px solid var(--border);border-top:1px solid transparent;background:var(--tab-inactive);white-space:nowrap;transition:background .1s,color .15s;flex-shrink:0;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--tab-active);color:var(--text-bright);border-top:1px solid var(--accent);}
+.tab .close{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:background .1s,color .1s;}
+.tab:hover .close,.tab.active .close{color:var(--text-dim);}
+.tab:hover .close:hover{background:rgba(255,255,255,0.15);color:var(--text);}
 
-  /* ---- Title block (signature element) ---- */
-  .titleblock{
-    border:1.5px solid var(--ink);
-    background:var(--bg-card);
-    margin:32px auto 0;
-    max-width:980px;
-    position:relative;
-    box-shadow:6px 6px 0 var(--line-soft);
-  }
-  .tb-top{
-    display:grid;
-    grid-template-columns: 1.4fr 1fr;
-  }
-  .tb-name{
-    padding:32px 28px 18px;
-    border-right:1.5px solid var(--ink);
-    position:relative;
-  }
-  .tb-name .eyebrow{
-    font-family:var(--mono);
-    font-size:12px;
-    letter-spacing:.12em;
-    color:var(--line);
-    text-transform:uppercase;
-    margin:0 0 10px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .tb-name .eyebrow::before{
-    content:'';
-    width:18px;height:1px;
-    background:var(--accent);
-    display:inline-block;
-  }
-  .tb-name h1{
-    font-family:var(--display);
-    font-optical-sizing:auto;
-    font-weight:600;
-    font-size:clamp(34px,5vw,52px);
-    margin:0 0 6px;
-    line-height:1.05;
-  }
-  .tb-name p{
-    margin:0;
-    font-size:15px;
-    color:#3b4a4f;
-  }
-  .tb-fields{
-    display:grid;
-    grid-template-rows:repeat(4,1fr);
-  }
-  .tb-field{
-    border-bottom:1px solid var(--line-soft);
-    padding:10px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-family:var(--mono);
-    font-size:12px;
-    transition:background .15s;
-  }
-  .tb-field:hover{background:rgba(217,98,43,0.06);}
-  .tb-field:last-child{border-bottom:none;}
-  .tb-field .k{color:var(--line);text-transform:uppercase;letter-spacing:.08em;}
-  .tb-field .v{color:var(--ink);font-weight:500;text-align:right;}
-  .tb-bottom{
-    display:flex;
-    flex-wrap:wrap;
-    gap:0;
-    border-top:1.5px solid var(--ink);
-  }
-  .tb-bottom a{
-    font-family:var(--mono);
-    font-size:12.5px;
-    padding:12px 18px;
-    text-decoration:none;
-    border-right:1px solid var(--line-soft);
-    display:flex;
-    align-items:center;
-    gap:6px;
-    transition:background .15s, color .15s;
-    position:relative;
-  }
-  .tb-bottom a:last-child{border-right:none;}
-  .tb-bottom a:hover{background:var(--accent-soft);color:#9c4a1f;}
-  .tb-bottom a .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);transition:transform .15s;}
-  .tb-bottom a:hover .dot{transform:scale(1.4);}
+/* CONTENT */
+.content{flex:1;overflow:hidden;position:relative;}
+.pane{position:absolute;inset:0;overflow-y:auto;display:none;}
+.pane.active{display:flex;}
+.pane::-webkit-scrollbar{width:6px;}
+.pane::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
-  section{padding:64px 0 0;scroll-margin-top:64px;}
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    margin-bottom:28px;
-  }
-  .section-head .num{
-    font-family:var(--mono);
-    font-size:13px;
-    color:var(--accent);
-    border:1px solid var(--accent);
-    padding:2px 8px;
-    border-radius:2px;
-  }
-  .section-head h2{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:26px;
-    margin:0;
-  }
-  .section-head .rule{flex:1;height:1px;background:var(--line-soft);}
+/* STATUS BAR */
+.statusbar{grid-column:1/-1;background:#313244;display:flex;align-items:center;padding:0 12px;font-family:var(--mono);font-size:11px;color:var(--text-dim);gap:16px;border-top:1px solid var(--border);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+.sb-right{margin-left:auto;display:flex;gap:16px;}
 
-  /* Summary */
-  .summary{
-    font-family:var(--display);
-    font-size:clamp(19px,2.4vw,23px);
-    font-weight:400;
-    line-height:1.5;
-    color:#1c2f36;
-    max-width:760px;
-  }
-  .summary .hl{color:var(--accent);font-weight:600;}
+/* CURSOR */
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:2px;}
 
-  /* Currently Working On */
-  .now-list{
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-  }
-  .now-item{
-    background:var(--bg-card);
-    padding:14px 18px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    transition:background .15s, padding-left .15s;
-  }
-  .now-item:hover{background:#fbf6f0;padding-left:24px;}
-  .now-icon{font-size:18px;flex-shrink:0;}
-  .now-text{font-size:14.5px;color:var(--ink);}
-  .now-text strong{color:#9c4a1f;font-weight:600;}
+/* ── ABOUT PANE ── */
+.about-split{display:grid;grid-template-columns:1fr 260px;height:100%;width:100%;}
+.about-main{padding:36px 36px;overflow-y:auto;border-right:1px solid var(--border);}
+.about-main::-webkit-scrollbar{width:4px;}
+.about-main::-webkit-scrollbar-thumb{background:var(--border);}
+.about-aside{padding:24px 20px;overflow-y:auto;background:#181825;}
+.about-aside::-webkit-scrollbar{width:4px;}
+.about-aside::-webkit-scrollbar-thumb{background:var(--border);}
+.greeting{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.greeting::before{content:'';width:24px;height:1px;background:var(--accent);}
+.hero-name{font-family:var(--display);font-size:clamp(28px,4vw,50px);font-weight:600;color:var(--text-bright);line-height:1.05;margin-bottom:8px;}
+.hero-role{font-family:var(--sans);font-size:14px;color:var(--text-dim);margin-bottom:24px;line-height:1.6;}
+.hero-desc{font-family:var(--sans);font-size:14.5px;line-height:1.75;color:var(--text);max-width:560px;margin-bottom:28px;}
+.hero-desc .hl{color:var(--accent);font-weight:600;}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+.stat{background:#252535;border:1px solid var(--border);padding:12px 16px;border-radius:4px;font-family:var(--mono);transition:border-color .15s,background .15s;min-width:90px;}
+.stat:hover{border-color:var(--accent);background:rgba(203,166,247,0.07);}
+.stat .s-val{font-size:20px;font-weight:600;color:var(--accent2);display:block;}
+.stat .s-key{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;}
+.now-title{font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.now-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#252535;border:1px solid var(--border);border-radius:4px;margin-bottom:6px;font-family:var(--sans);font-size:13px;color:var(--text);transition:border-color .15s,background .15s;}
+.now-item:hover{border-color:var(--accent2);background:rgba(137,180,250,0.06);}
+.now-item .ni-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.now-item strong{color:var(--yellow);}
+.aside-label{font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;margin-top:20px;}
+.aside-label:first-child{margin-top:0;}
+.contact-link{display:flex;align-items:center;gap:9px;padding:8px 12px;background:#1e1e2e;border:1px solid var(--border);border-radius:4px;font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-decoration:none;margin-bottom:5px;transition:border-color .15s,color .15s,background .15s;cursor:pointer;}
+.contact-link:hover{border-color:var(--green);color:var(--green);background:rgba(166,227,161,0.06);}
+.cl-icon{font-size:13px;}
+.code-block{font-family:var(--mono);font-size:11.5px;color:var(--text);line-height:1.8;padding:12px;background:#1e1e2e;border:1px solid var(--border);border-radius:4px;}
 
-  /* Specs grid (skills) */
-  .specs{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1px;
-    background:var(--ink);
-    border:1px solid var(--ink);
-  }
-  @media (max-width:760px){
-    .specs{grid-template-columns:repeat(2,1fr);}
-  }
-  @media (max-width:480px){
-    .specs{grid-template-columns:1fr;}
-  }
-  .spec{
-    background:var(--bg-card);
-    padding:18px 20px;
-    transition:background .18s, transform .18s;
-  }
-  .spec:hover{background:#fbf6f0;transform:translateY(-2px);}
-  .spec .label{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--line);
-    margin-bottom:8px;
-  }
-  .spec .items{
-    font-size:14px;
-    color:var(--ink);
-  }
+/* ── SKILLS PANE ── */
+.skills-wrap{padding:28px 36px;width:100%;overflow-y:auto;}
+.skills-wrap::-webkit-scrollbar{width:4px;}
+.skills-wrap::-webkit-scrollbar-thumb{background:var(--border);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.skill-card{background:#252535;border:1px solid var(--border);border-radius:4px;padding:16px;transition:border-color .2s,transform .2s,background .2s;}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-2px);background:rgba(203,166,247,0.06);}
+.sk-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.sk-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.sk-items{display:flex;flex-wrap:wrap;gap:5px;}
+.sk-tag{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border);transition:background .15s,border-color .15s,color .15s;}
+.skill-card:hover .sk-tag{border-color:rgba(203,166,247,0.25);}
 
-  /* Projects as schematic cards */
-  .project{
-    border:1px solid var(--ink);
-    background:var(--bg-card);
-    margin-bottom:24px;
-    position:relative;
-    overflow:hidden;
-    transition:box-shadow .2s ease, transform .2s ease;
-  }
-  .project:hover{
-    box-shadow:5px 5px 0 var(--line-soft);
-    transform:translate(-2px,-2px);
-  }
-  .project-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
-    padding:22px 24px 14px;
-    border-bottom:1px dashed var(--line-soft);
-  }
-  .project-head h3{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:21px;
-    margin:0 0 4px;
-  }
-  .project-head .stack{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--line);
-  }
-  .status{
-    font-family:var(--mono);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    padding:4px 10px;
-    border-radius:2px;
-    white-space:nowrap;
-    height:fit-content;
-  }
-  .status.live{background:#dff0e4;color:#2c6b3f;border:1px solid #2c6b3f;}
-  .status.team{background:#eaf0f7;color:#2e5a77;border:1px solid #2e5a77;}
-  .status.solo{background:var(--accent-soft);color:#9c4a1f;border:1px solid var(--accent);}
+/* ── PROJECTS PANE ── */
+.projects-wrap{padding:28px 36px;width:100%;overflow-y:auto;}
+.projects-wrap::-webkit-scrollbar{width:4px;}
+.projects-wrap::-webkit-scrollbar-thumb{background:var(--border);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
+.proj-card{background:#252535;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s,box-shadow .2s;overflow:hidden;}
+.proj-card:hover{border-color:var(--accent2);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3);}
+.proj-card.featured{grid-column:1/-1;}
+.proj-card.wip{border-style:dashed;border-color:var(--border);background:rgba(203,166,247,0.03);}
+.proj-card.wip:hover{border-color:var(--yellow);border-style:dashed;transform:translateY(-2px);}
+.proj-top{padding:18px 18px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.proj-title{font-family:var(--display);font-size:18px;font-weight:600;color:var(--text-bright);margin-bottom:8px;}
+.proj-card.wip .proj-title{color:var(--text-dim);}
+.chips{display:flex;flex-wrap:wrap;gap:5px;}
+.chip{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(137,180,250,0.1);color:var(--accent2);border:1px solid rgba(137,180,250,0.2);}
+.chip.wip-chip{background:rgba(249,226,175,0.08);color:var(--yellow);border-color:rgba(249,226,175,0.2);}
+.proj-status{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:3px;white-space:nowrap;height:fit-content;flex-shrink:0;}
+.ps-live{background:rgba(166,227,161,0.12);color:var(--green);border:1px solid rgba(166,227,161,0.25);}
+.ps-team{background:rgba(137,180,250,0.1);color:var(--accent2);border:1px solid rgba(137,180,250,0.2);}
+.ps-solo{background:rgba(203,166,247,0.1);color:var(--accent);border:1px solid rgba(203,166,247,0.2);}
+.ps-wip{background:rgba(249,226,175,0.08);color:var(--yellow);border:1px solid rgba(249,226,175,0.2);}
+.proj-body{padding:14px 18px 18px;flex:1;display:flex;flex-direction:column;}
+.proj-body ul{padding-left:16px;flex:1;}
+.proj-body li{font-family:var(--sans);font-size:13px;color:var(--text);line-height:1.65;margin-bottom:6px;}
+.proj-card.wip li{color:var(--text-dim);}
+.proj-link{display:inline-flex;align-items:center;gap:5px;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px;transition:color .15s,border-color .15s;}
+.proj-link:hover{color:var(--green);border-color:var(--green);}
 
-  .project-body{padding:18px 24px 24px;}
-  .project-body ul{margin:0;padding-left:18px;}
-  .project-body li{margin-bottom:8px;font-size:14.5px;}
-  .project-links{margin-top:14px;display:flex;gap:14px;}
-  .project-links a{
-    font-family:var(--mono);
-    font-size:12px;
-    text-decoration:none;
-    color:var(--line);
-    border-bottom:1px solid var(--line);
-    transition:color .15s, border-color .15s;
-  }
-  .project-links a:hover{color:var(--accent);border-color:var(--accent);}
+/* ── RECORD PANE ── */
+.record-wrap{padding:28px 36px;width:100%;overflow-y:auto;}
+.record-wrap::-webkit-scrollbar{width:4px;}
+.record-wrap::-webkit-scrollbar-thumb{background:var(--border);}
+.record-table{width:100%;border-collapse:collapse;font-family:var(--mono);}
+.record-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);padding:0 14px 10px;border-bottom:1px solid var(--border);}
+.record-table td{padding:12px 14px;font-size:13px;color:var(--text);border-bottom:1px solid rgba(49,50,68,0.5);vertical-align:middle;}
+.record-table tbody tr{transition:background .1s;}
+.record-table tbody tr:hover{background:rgba(255,255,255,0.03);}
+.r-tag{font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+.r-award{background:rgba(249,226,175,0.12);color:var(--yellow);border:1px solid rgba(249,226,175,0.2);}
+.r-rank{background:rgba(203,166,247,0.1);color:var(--accent);border:1px solid rgba(203,166,247,0.2);}
+.r-cert{background:rgba(166,227,161,0.1);color:var(--green);border:1px solid rgba(166,227,161,0.2);}
+.r-sel{background:rgba(137,180,250,0.1);color:var(--accent2);border:1px solid rgba(137,180,250,0.2);}
+.r-sim{background:rgba(148,226,213,0.1);color:var(--teal);border:1px solid rgba(148,226,213,0.2);}
 
-  /* Achievements / certs as ledger rows */
-  .ledger{border-top:1px solid var(--ink);}
-  .ledger-row{
-    display:grid;
-    grid-template-columns: 90px 1fr;
-    border-bottom:1px solid var(--line-soft);
-    padding:14px 4px;
-    gap:18px;
-    transition:background .15s, padding-left .15s;
-  }
-  .ledger-row:hover{background:rgba(217,98,43,0.05);padding-left:10px;}
-  .ledger-row .tag{
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--accent);
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    padding-top:2px;
-  }
-  .ledger-row .desc{font-size:14.5px;}
+/* GLOBAL SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#313244;border-radius:3px;}
 
-  footer{
-    margin-top:80px;
-    padding:30px 0 50px;
-    border-top:1.5px solid var(--ink);
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--line);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-
-  /* back to top */
-  .to-top{
-    position:fixed;
-    bottom:24px;right:24px;
-    width:42px;height:42px;
-    border-radius:50%;
-    background:var(--ink);
-    color:var(--bg);
-    border:none;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-    font-family:var(--mono);
-    font-size:16px;
-    opacity:0;
-    transform:translateY(10px);
-    transition:opacity .25s, transform .25s, background .15s;
-    z-index:60;
-    pointer-events:none;
-  }
-  .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto;}
-  .to-top:hover{background:var(--accent);}
-
-  @media (max-width:680px){
-    .tb-top{grid-template-columns:1fr;}
-    .tb-name{border-right:none;border-bottom:1.5px solid var(--ink);}
-    .ledger-row{grid-template-columns:70px 1fr;}
-    .titleblock{box-shadow:4px 4px 0 var(--line-soft);}
-  }
-
-  /* focus visibility */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--accent);
-    outline-offset:2px;
-  }
-
-  /* reveal animation */
-  .reveal{
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity .5s ease, transform .5s ease;
-  }
-  .reveal.in{opacity:1;transform:translateY(0);}
+@media(max-width:700px){
+  html,body{overflow:auto;}
+  .ide{display:block;height:auto;}
+  .sidebar{display:none;}
+  .main-area{height:100vh;}
+  .about-split{grid-template-columns:1fr;}
+  .about-aside{display:none;}
+  .proj-card.featured{grid-column:auto;}
+  .pane{position:static;display:none!important;}
+  .pane.active{display:flex!important;}
+}
 </style>
 </head>
 <body>
-  <div class="progress-rail" id="progressRail"></div>
-  <nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <span class="nb-name">LIKHITHA SHASTHRY B S</span>
-      <div class="navbar-links">
-        <a href="#summary">Summary</a>
-        <a href="#skills">Specs</a>
-        <a href="#projects">Builds</a>
-        <a href="#record">Record</a>
-      </div>
-    </div>
-  </nav>
+<div class="ide">
 
-  <div class="titleblock reveal">
-    <div class="tb-top">
-      <div class="tb-name">
-        <p class="eyebrow">Engineering Notebook — Sheet 01</p>
-        <h1>Likhitha Shasthry B S</h1>
-        <p>Computer Science (AI &amp; ML) Undergraduate · GSSS Institute of Engineering &amp; Technology</p>
-      </div>
-      <div class="tb-fields">
-        <div class="tb-field"><span class="k">Status</span><span class="v">4th Semester · 2024–2028</span></div>
-        <div class="tb-field"><span class="k">CGPA</span><span class="v">8.8 / 10</span></div>
-        <div class="tb-field"><span class="k">Stack</span><span class="v">Java · C++ · Python · JS</span></div>
-        <div class="tb-field"><span class="k">Builds</span><span class="v">1 Deployed · 4 Shipped</span></div>
+  <!-- TITLE BAR -->
+  <div class="titlebar">
+    <div class="traffic"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
+    likhitha-portfolio — VS Portfolio 1.0
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="sidebar-header">Explorer</div>
+      <div class="file-item active" data-tab="about"><span class="file-icon">👤</span>about.tsx<span class="file-badge">●</span></div>
+      <div class="file-item" data-tab="skills"><span class="file-icon">⚡</span>skills.json</div>
+      <div class="file-item" data-tab="projects"><span class="file-icon">🗂️</span>projects.ts</div>
+      <div class="file-item" data-tab="record"><span class="file-icon">🏆</span>achievements.md</div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div>
+      <div class="sidebar-header">Source Control</div>
+      <div class="git-block">
+        <div class="branch">⎇ &nbsp;main</div>
+        <div style="color:var(--green);margin-bottom:3px;">✓ Portfolio up to date</div>
+        <div style="color:var(--yellow);">🚧 gatepass-system WIP</div>
+        <div style="color:var(--yellow);margin-top:2px;">📱 react-native-explorer</div>
       </div>
     </div>
-    <div class="tb-bottom">
-      <a href="mailto:likhithashasthry@gmail.com"><span class="dot"></span>likhithashasthry@gmail.com</a>
-      <a href="tel:+919448537792"><span class="dot"></span>+91 9448537792</a>
-      <a href="https://github.com/likhitha-shasthry" target="_blank" rel="noopener"><span class="dot"></span>github.com/likhitha-shasthry</a>
-      <a href="https://linkedin.com/in/likhitha-shasthry-b-s" target="_blank" rel="noopener"><span class="dot"></span>LinkedIn</a>
-      <a href="https://hackerrank.com/likhithashasthry" target="_blank" rel="noopener"><span class="dot"></span>HackerRank</a>
+    <div class="sidebar-divider"></div>
+    <div>
+      <div class="sidebar-header">Quick Nav</div>
+      <div class="file-item" data-tab="skills" style="padding-left:18px;font-size:11px;">└ Frontend Stack</div>
+      <div class="file-item" data-tab="projects" style="padding-left:18px;font-size:11px;">└ Live Deployments</div>
+      <div class="file-item" data-tab="record" style="padding-left:18px;font-size:11px;">└ Achievements</div>
     </div>
   </div>
 
-  <div class="wrap">
+  <!-- MAIN AREA -->
+  <div class="main-area">
+    <div class="tabs" id="tabBar"></div>
+    <div class="content">
 
-    <section id="summary">
-      <div class="section-head"><span class="num">01</span><h2>Summary</h2><span class="rule"></span></div>
-      <p class="summary reveal">
-        I build things that get <span class="hl">used</span>, not just demoed — a recruitment platform now running live at my college, an irrigation model that cuts real water waste, a tool that helps beginners see code think. Currently deep in data structures, operating systems, and the AI &amp; ML coursework that frames how I approach problems.
-      </p>
-    </section>
+      <!-- ABOUT -->
+      <div class="pane active" id="pane-about">
+        <div class="about-split">
+          <div class="about-main">
+            <p class="greeting">about.tsx — default export</p>
+            <h1 class="hero-name">Likhitha Shasthry B S<span class="cursor"></span></h1>
+            <p class="hero-role">B.E. Computer Science (AI &amp; ML) · GSSS IET · 2024–2028 · CGPA 8.8/10</p>
+            <p class="hero-desc">
+              I build things that get <span class="hl">used</span> — a full-stack recruitment platform live at my college, an irrigation decision engine cutting real water waste, a React visualizer that helps beginners see code think. My focus is clean, performant frontend with solid backend integration: hooks, REST APIs, responsive design, and real-world deployment.
+            </p>
+            <div class="stats-row">
+              <div class="stat"><span class="s-val">8.8</span><span class="s-key">CGPA / 10</span></div>
+              <div class="stat"><span class="s-val">5★</span><span class="s-key">HackerRank C</span></div>
+              <div class="stat"><span class="s-val">1 Live</span><span class="s-key">Deployed App</span></div>
+              <div class="stat"><span class="s-val">5+</span><span class="s-key">Projects Built</span></div>
+            </div>
+            <div class="now-title">// currently working on</div>
+            <div class="now-item"><span class="ni-icon">🚧</span><span>Building a <strong>Hostel Gatepass Management System</strong> — web app digitizing student gate-pass requests &amp; hostel approvals</span></div>
+            <div class="now-item"><span class="ni-icon">📱</span><span>Exploring <strong>React Native</strong> — native device features, gesture handling, and stack navigation</span></div>
+            <div class="now-item"><span class="ni-icon">📚</span><span>Deepening <strong>DSA</strong> and <strong>Operating Systems</strong> fundamentals</span></div>
+            <div class="now-item"><span class="ni-icon">🌱</span><span>Seeking <strong>Software Engineering Internship</strong> opportunities (Frontend / Full-Stack)</span></div>
+          </div>
+          <div class="about-aside">
+            <div class="aside-label">// contact</div>
+            <a class="contact-link" href="mailto:likhithashasthry@gmail.com"><span class="cl-icon">✉</span>likhithashasthry@gmail.com</a>
+            <a class="contact-link" href="tel:+919448537792"><span class="cl-icon">📞</span>+91 9448537792</a>
+            <a class="contact-link" href="https://github.com/likhitha-shasthry" target="_blank" rel="noopener"><span class="cl-icon">⬡</span>github.com/likhitha-shasthry</a>
+            <a class="contact-link" href="https://linkedin.com/in/likhitha-shasthry-b-s" target="_blank" rel="noopener"><span class="cl-icon">🔗</span>LinkedIn</a>
+            <a class="contact-link" href="https://hackerrank.com/likhithashasthry" target="_blank" rel="noopener"><span class="cl-icon">⌨</span>HackerRank</a>
 
-    <section id="now">
-      <div class="section-head"><span class="num">01.5</span><h2>Currently Working On</h2><span class="rule"></span></div>
-      <div class="now-list reveal">
-        <div class="now-item">
-          <span class="now-icon">🚧</span>
-          <span class="now-text">Building a <strong>Hostel Gatepass Management System</strong> — a web app to digitize and streamline student gate-pass requests and approvals</span>
-        </div>
-        <div class="now-item">
-          <span class="now-icon">📚</span>
-          <span class="now-text">Strengthening fundamentals in <strong>Operating Systems</strong> and <strong>Data Structures &amp; Algorithms</strong></span>
-        </div>
-        <div class="now-item">
-          <span class="now-icon">💡</span>
-          <span class="now-text">Practicing problem-solving consistently on <strong>HackerRank</strong></span>
-        </div>
-        <div class="now-item">
-          <span class="now-icon">🌱</span>
-          <span class="now-text">Looking for <strong>Software Engineering Internship</strong> opportunities</span>
-        </div>
-      </div>
-    </section>
+            <div class="aside-label">// navigate</div>
+            <div class="contact-link" data-tab="skills"><span class="cl-icon">⚡</span>skills.json</div>
+            <div class="contact-link" data-tab="projects"><span class="cl-icon">🗂</span>projects.ts</div>
+            <div class="contact-link" data-tab="record"><span class="cl-icon">🏆</span>achievements.md</div>
 
-    <section id="skills">
-      <div class="section-head"><span class="num">02</span><h2>Specs</h2><span class="rule"></span></div>
-      <div class="specs reveal">
-        <div class="spec">
-          <div class="label">Languages</div>
-          <div class="items">Java, C, C++, Python</div>
-        </div>
-        <div class="spec">
-          <div class="label">Core CS</div>
-          <div class="items">Data Structures &amp; Algorithms, Operating Systems</div>
-        </div>
-        <div class="spec">
-          <div class="label">Web</div>
-          <div class="items">HTML, CSS, JavaScript, Node.js, React.js, PHP</div>
-        </div>
-        <div class="spec">
-          <div class="label">Data</div>
-          <div class="items">MySQL, MongoDB, SQL</div>
-        </div>
-        <div class="spec">
-          <div class="label">Systems</div>
-          <div class="items">MQTT, IoT Communication, REST APIs</div>
-        </div>
-        <div class="spec">
-          <div class="label">Tools</div>
-          <div class="items">Git, Figma, AWS Cloud Foundations</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="section-head"><span class="num">03</span><h2>Builds</h2><span class="rule"></span></div>
-
-      <div class="projects-grid">
-
-      <div class="project featured reveal">
-        <div class="project-head">
-          <div>
-            <h3>Faculty Recruitment Management System</h3>
-            <div class="chips">
-              <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+            <div class="aside-label">// education</div>
+            <div class="code-block">
+              <span style="color:var(--accent);">const</span> <span style="color:var(--accent2);">edu</span> = {<br>
+              &nbsp;<span style="color:var(--orange);">school</span>: <span style="color:var(--green);">"GSSS IET"</span>,<br>
+              &nbsp;<span style="color:var(--orange);">degree</span>: <span style="color:var(--green);">"B.E. CSE"</span>,<br>
+              &nbsp;<span style="color:var(--orange);">spec</span>: <span style="color:var(--green);">"AI &amp; ML"</span>,<br>
+              &nbsp;<span style="color:var(--orange);">cgpa</span>: <span style="color:var(--yellow);">8.8</span>,<br>
+              &nbsp;<span style="color:var(--orange);">batch</span>: <span style="color:var(--yellow);">2024–2028</span><br>
+              }
             </div>
           </div>
-          <span class="status live">Deployed · live</span>
-        </div>
-        <div class="project-body">
-          <ul>
-            <li>Full-stack platform handling end-to-end faculty application and multi-stage selection workflows.</li>
-            <li>Normalized MySQL schema with CRUD operations supporting concurrent use by applicants and reviewers.</li>
-            <li>In active production use by the college — not a class demo, a system people depend on.</li>
-            <li>1st Place, GDG Hackathon.</li>
-          </ul>
-          
-<div class="project-links">
-            <a href="https://github.com/likhitha-shasthry/demo2" target="_blank" rel="noopener">View source →</a>
-          </div>
         </div>
       </div>
 
-      <div class="project reveal">
-        <div class="project-head">
-          <div>
-            <h3>Intelligent Irrigation Scheduler</h3>
-            <div class="chips">
-              <span class="chip">JavaScript</span><span class="chip">REST APIs</span><span class="chip">UI/UX</span>
+      <!-- SKILLS -->
+      <div class="pane" id="pane-skills">
+        <div class="skills-wrap">
+          <div class="skills-grid">
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--red);"><span class="sk-dot" style="background:var(--red);"></span>Languages</div>
+              <div class="sk-items"><span class="sk-tag">Java</span><span class="sk-tag">C++</span><span class="sk-tag">C</span><span class="sk-tag">Python</span><span class="sk-tag">JavaScript (ES6+)</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--accent2);"><span class="sk-dot" style="background:var(--accent2);"></span>Frontend</div>
+              <div class="sk-items"><span class="sk-tag">React.js</span><span class="sk-tag">useState</span><span class="sk-tag">useEffect</span><span class="sk-tag">useContext</span><span class="sk-tag">React Native</span><span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">Flexbox/Grid</span><span class="sk-tag">Responsive Design</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--orange);"><span class="sk-dot" style="background:var(--orange);"></span>Backend & APIs</div>
+              <div class="sk-items"><span class="sk-tag">Node.js</span><span class="sk-tag">PHP</span><span class="sk-tag">REST APIs</span><span class="sk-tag">Axios</span><span class="sk-tag">Fetch</span><span class="sk-tag">Async/Await</span><span class="sk-tag">CRUD</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--green);"><span class="sk-dot" style="background:var(--green);"></span>Databases</div>
+              <div class="sk-items"><span class="sk-tag">MySQL</span><span class="sk-tag">MongoDB</span><span class="sk-tag">SQL</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--yellow);"><span class="sk-dot" style="background:var(--yellow);"></span>Tools & Platforms</div>
+              <div class="sk-items"><span class="sk-tag">Git</span><span class="sk-tag">Figma</span><span class="sk-tag">AWS Cloud</span><span class="sk-tag">Chrome DevTools</span><span class="sk-tag">React DevTools</span><span class="sk-tag">VS Code Debugger</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--accent);"><span class="sk-dot" style="background:var(--accent);"></span>Core CS</div>
+              <div class="sk-items"><span class="sk-tag">OOP</span><span class="sk-tag">DSA</span><span class="sk-tag">Operating Systems</span><span class="sk-tag">DBMS</span><span class="sk-tag">MQTT</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--teal);"><span class="sk-dot" style="background:var(--teal);"></span>Performance & UX</div>
+              <div class="sk-items"><span class="sk-tag">Lazy Loading</span><span class="sk-tag">Memoization</span><span class="sk-tag">Debouncing</span><span class="sk-tag">Virtualized Lists</span><span class="sk-tag">UI/UX Prototyping</span></div>
+            </div>
+            <div class="skill-card">
+              <div class="sk-label" style="color:var(--pink);"><span class="sk-dot" style="background:var(--pink);"></span>Soft Skills</div>
+              <div class="sk-items"><span class="sk-tag">Problem Solving</span><span class="sk-tag">Teamwork</span><span class="sk-tag">Agile Collaboration</span><span class="sk-tag">Adaptability</span></div>
             </div>
           </div>
-          <span class="status team">Team of 4</span>
-        </div>
-        <div class="project-body">
-          <ul>
-            <li>Data-driven irrigation system pulling real-time weather data via REST APIs to automate watering decisions.</li>
-            <li>Evapotranspiration (ET)-based model cut simulated water usage by 20–30%.</li>
-            <li>Owned UI/UX and the data flow between the API layer and the decision engine.</li>
-          </ul>
-          <div class="project-links">
-            <a href="https://github.com/likhitha-shasthry/tech-twins" target="_blank" rel="noopener">View source →</a>
-          </div>
         </div>
       </div>
 
-      <div class="project reveal">
-        <div class="project-head">
-          <div>
-            <h3>CodeFlow AI — Python Execution Visualizer</h3>
-            <div class="chips">
-              <span class="chip">JavaScript</span><span class="chip">Python</span>
+      <!-- PROJECTS -->
+      <div class="pane" id="pane-projects">
+        <div class="projects-wrap">
+          <div class="proj-grid">
+
+            <div class="proj-card featured">
+              <div class="proj-top">
+                <div>
+                  <div class="proj-title">Faculty Recruitment Management System</div>
+                  <div class="chips"><span class="chip">React</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Axios</span><span class="chip">Figma</span><span class="chip">CSS Flexbox/Grid</span></div>
+                </div>
+                <span class="proj-status ps-live">● Deployed · Live</span>
+              </div>
+              <div class="proj-body">
+                <ul>
+                  <li>Built a full-stack recruitment platform using React functional components and hooks for dynamic UI updates.</li>
+                  <li>Integrated REST APIs with Axios for async data exchange between the React frontend and PHP backend.</li>
+                  <li>Designed mobile-first responsive screens with CSS Flexbox/Grid for consistent cross-device use.</li>
+                  <li>Improved frontend performance with lazy loading, memoization, and reduced unnecessary re-renders.</li>
+                  <li>Architected normalized MySQL schemas supporting concurrent access by 100+ applicants and reviewers.</li>
+                  <li>Created Figma wireframes, tested usability, and refined UI/UX before production deployment.</li>
+                </ul>
+                <a class="proj-link" href="https://github.com/likhitha-shasthry/demo2" target="_blank" rel="noopener">⬡ View source →</a>
+              </div>
             </div>
-          </div>
-          <span class="status solo">Solo build</span>
-        </div>
-        <div class="project-body">
-          <ul>
-            <li>Interactive tool that traces Python execution line-by-line for beginners learning to code.</li>
-            <li>Tracks variable state changes, loop iterations, function call flow, and runtime errors in real time.</li>
-          </ul>
-          <div class="project-links">
-            <a href="https://github.com/likhitha-shasthry/CodeFlow-AI" target="_blank" rel="noopener">View source →</a>
-          </div>
-        </div>
-      </div>
 
-      <div class="project reveal">
-        <div class="project-head">
-          <div>
-            <h3>Excel Sheet Sorting Tool</h3>
-            <div class="chips">
-              <span class="chip">Python</span><span class="chip">Excel</span><span class="chip">File Handling</span>
+            <div class="proj-card">
+              <div class="proj-top">
+                <div>
+                  <div class="proj-title">Intelligent Irrigation Scheduler</div>
+                  <div class="chips"><span class="chip">React.js</span><span class="chip">REST APIs</span><span class="chip">Figma</span><span class="chip">Chrome DevTools</span></div>
+                </div>
+                <span class="proj-status ps-team">Team of 4</span>
+              </div>
+              <div class="proj-body">
+                <ul>
+                  <li>Built a data-driven irrigation web app using React hooks and real-time weather data via REST API calls.</li>
+                  <li>Implemented an ET-based decision engine reducing simulated water usage by 20–30%.</li>
+                  <li>Led UI/UX work — Figma prototypes, responsive mobile-first layouts.</li>
+                  <li>Used Chrome DevTools to profile performance and debug API response delays.</li>
+                </ul>
+                <a class="proj-link" href="https://github.com/likhitha-shasthry/tech-twins" target="_blank" rel="noopener">⬡ View source →</a>
+              </div>
             </div>
-          </div>
-          <span class="status team">Team project</span>
-        </div>
-        <div class="project-body">
-          <ul>
-            <li>CLI application to sort and organize Excel sheet data by selected columns and sort order.</li>
-            <li>Handled file I/O directly, reading and rewriting spreadsheet data without manual intervention.</li>
-          </ul>
-        </div>
-      </div>
 
-      <div class="project reveal">
-        <div class="project-head">
-          <div>
-            <h3>Desktop Organizer (CLI)</h3>
-            <div class="chips">
-              <span class="chip">Java</span><span class="chip">DSA</span><span class="chip">Java NIO</span><span class="chip">OS File Handling</span>
+            <div class="proj-card">
+              <div class="proj-top">
+                <div>
+                  <div class="proj-title">CodeFlow AI — Python Visualizer</div>
+                  <div class="chips"><span class="chip">React.js</span><span class="chip">Python</span><span class="chip">Async/Await</span></div>
+                </div>
+                <span class="proj-status ps-solo">Solo Build</span>
+              </div>
+              <div class="proj-body">
+                <ul>
+                  <li>Interactive learning tool with React components and state management to visualize Python execution line-by-line.</li>
+                  <li>Handled async execution with Promises and async/await for real-time variable tracking and error reporting.</li>
+                  <li>Applied debounced input handling and virtualized lists to keep UI updates smooth.</li>
+                </ul>
+                <a class="proj-link" href="https://github.com/likhitha-shasthry/CodeFlow-AI" target="_blank" rel="noopener">⬡ View source →</a>
+              </div>
             </div>
+
+            <div class="proj-card">
+              <div class="proj-top">
+                <div>
+                  <div class="proj-title">React Native Explorer</div>
+                  <div class="chips"><span class="chip">React Native</span><span class="chip">Stack Navigation</span><span class="chip">Gestures</span></div>
+                </div>
+                <span class="proj-status ps-solo">Self-Learning</span>
+              </div>
+              <div class="proj-body">
+                <ul>
+                  <li>Built a to-do app with React Native, stack navigation, reusable components, and custom layouts.</li>
+                  <li>Exploring native device features and gesture handling to strengthen mobile dev fundamentals.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="proj-card wip">
+              <div class="proj-top">
+                <div>
+                  <div class="proj-title">Hostel Gatepass Management System</div>
+                  <div class="chips"><span class="chip wip-chip">Web App</span><span class="chip wip-chip">In Progress</span></div>
+                </div>
+                <span class="proj-status ps-wip">🚧 WIP</span>
+              </div>
+              <div class="proj-body">
+                <ul>
+                  <li>Digitizing and streamlining student gate-pass requests and hostel approvals as a web application.</li>
+                  <li>Currently in active development — check back soon.</li>
+                </ul>
+              </div>
+            </div>
+
           </div>
-          <span class="status solo">Solo build</span>
-        </div>
-        <div class="project-body">
-          <ul>
-            <li>Java desktop application that automatically organizes files and folders by creation month.</li>
-            <li>Used Java NIO and OS-level file handling to automate sorting, improving manual workflow efficiency.</li>
-            <li>Applied stack and recursion to manage nested directory traversal during organization.</li>
-          </ul>
         </div>
       </div>
 
+      <!-- RECORD -->
+      <div class="pane" id="pane-record">
+        <div class="record-wrap">
+          <table class="record-table">
+            <thead>
+              <tr><th>Type</th><th>Achievement</th><th>Issuer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="r-tag r-award">Award</span></td><td>1st Place — GDG Hackathon (Faculty Recruitment System)</td><td>GDG</td></tr>
+              <tr><td><span class="r-tag r-award">Award</span></td><td>2nd Place — Data Structures &amp; Algorithms Tournament</td><td>College</td></tr>
+              <tr><td><span class="r-tag r-award">Award</span></td><td>Winner — Group Discussion Competition (judged by placed seniors)</td><td>Apti College</td></tr>
+              <tr><td><span class="r-tag r-rank">Rank</span></td><td>5★ in C, 3★ in Problem Solving</td><td>HackerRank</td></tr>
+              <tr><td><span class="r-tag r-sel">Selected</span></td><td>Samsung Innovation Campus — IoT Track</td><td>Samsung</td></tr>
+              <tr><td><span class="r-tag r-cert">Cert</span></td><td>Programming in C</td><td>NPTEL (SWAYAM)</td></tr>
+              <tr><td><span class="r-tag r-cert">Cert</span></td><td>AWS Academy — Cloud Foundations</td><td>AWS</td></tr>
+              <tr><td><span class="r-tag r-sim">Sim</span></td><td>Cybersecurity Job Simulation — risk assessment &amp; threat identification</td><td>Deloitte / Forage</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </section>
 
-    <section id="record">
-      <div class="section-head"><span class="num">04</span><h2>Record</h2><span class="rule"></span></div>
-      <div class="ledger reveal">
-        <div class="ledger-row"><span class="tag">Award</span><span class="desc">1st Place — GDG Hackathon, Faculty Recruitment Management System</span></div>
-        <div class="ledger-row"><span class="tag">Award</span><span class="desc">2nd Place — Data Structures &amp; Algorithms Tournament</span></div>
-        <div class="ledger-row"><span class="tag">Award</span><span class="desc">Winner — Group Discussion Competition, "Apti College" (judged by placed seniors)</span></div>
-        <div class="ledger-row"><span class="tag">Rank</span><span class="desc">HackerRank: 5★ in C, 3★ in Problem Solving</span></div>
-        <div class="ledger-row"><span class="tag">Selected</span><span class="desc">Samsung Innovation Campus — IoT Track, Selected Participant</span></div>
-        <div class="ledger-row"><span class="tag">Cert</span><span class="desc">Programming in C — NPTEL (SWAYAM)</span></div>
-        <div class="ledger-row"><span class="tag">Cert</span><span class="desc">AWS Academy Graduate — Cloud Foundations</span></div>
-        <div class="ledger-row"><span class="tag">Sim</span><span class="desc">Deloitte Cybersecurity Job Simulation (Forage) — risk assessment &amp; threat identification, Aug 2025</span></div>
-      </div>
-    </section>
-
-    <footer>
-      <span>Sheet 01 of 01 — last revised 2026</span>
-      <span>Built with intent, not a template</span>
-    </footer>
+    </div>
   </div>
 
-  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+  <!-- STATUS BAR -->
+  <div class="statusbar">
+    <span class="sb-dot"></span>
+    <span>Likhitha Shasthry B S</span>
+    <span>⎇ main</span>
+    <span>🎓 CSE (AI &amp; ML) · 2024–2028</span>
+    <div class="sb-right">
+      <span id="sb-lang">TypeScript · React</span>
+      <span>UTF-8</span>
+      <span>📍 India</span>
+    </div>
+  </div>
+
+</div>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
-  els.forEach(el=>io.observe(el));
+const TAB_ICONS={about:'👤',skills:'⚡',projects:'🗂️',record:'🏆'};
+const TAB_NAMES={about:'about.tsx',skills:'skills.json',projects:'projects.ts',record:'achievements.md'};
+const TAB_LANGS={about:'TypeScript · React',skills:'JSON',projects:'TypeScript · React',record:'Markdown'};
+let openTabs=['about'],activeTab='about';
 
-  const navbar = document.getElementById('navbar');
-  const progressRail = document.getElementById('progressRail');
-  const toTop = document.getElementById('toTop');
-  const titleblock = document.querySelector('.titleblock');
-
-  function onScroll(){
-    const scrollY = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-    progressRail.style.width = pct + '%';
-
-    const showThreshold = titleblock.offsetTop + titleblock.offsetHeight;
-    navbar.classList.toggle('show', scrollY > showThreshold);
-    toTop.classList.toggle('show', scrollY > 400);
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-
-  toTop.addEventListener('click', ()=>{
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
-
-  // Scroll-spy
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.navbar-links a');
-  const spy = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      const id = entry.target.getAttribute('id');
-      const link = document.querySelector(`.navbar-links a[href="#${id}"]`);
-      if(!link) return;
-      if(entry.isIntersecting){
-        navLinks.forEach(l=>l.classList.remove('active'));
-        link.classList.add('active');
-      }
+function renderTabs(){
+  const bar=document.getElementById('tabBar');
+  bar.innerHTML=openTabs.map(t=>`
+    <div class="tab ${t===activeTab?'active':''}" data-tab="${t}">
+      <span>${TAB_ICONS[t]}</span>${TAB_NAMES[t]}
+      <span class="close" data-close="${t}">×</span>
+    </div>`).join('');
+  bar.querySelectorAll('.tab').forEach(el=>{
+    el.addEventListener('click',e=>{
+      if(e.target.dataset.close){closeTab(e.target.dataset.close);return;}
+      switchTab(el.dataset.tab);
     });
-  }, {rootMargin:'-40% 0px -50% 0px'});
-  sections.forEach(s=>spy.observe(s));
+  });
+}
+
+function switchTab(id){
+  if(!id) return;
+  activeTab=id;
+  if(!openTabs.includes(id)) openTabs.push(id);
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  const pane=document.getElementById('pane-'+id);
+  if(pane) pane.classList.add('active');
+  document.querySelectorAll('.file-item').forEach(f=>f.classList.toggle('active',f.dataset.tab===id));
+  document.getElementById('sb-lang').textContent=TAB_LANGS[id]||'TypeScript';
+  renderTabs();
+}
+
+function closeTab(id){
+  openTabs=openTabs.filter(t=>t!==id);
+  if(!openTabs.length) openTabs=['about'];
+  if(activeTab===id) switchTab(openTabs[openTabs.length-1]);
+  else renderTabs();
+}
+
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-tab]');
+  if(!el||e.target.dataset.close) return;
+  switchTab(el.dataset.tab);
+});
+
+renderTabs();
 </script>
 </body>
 </html>
